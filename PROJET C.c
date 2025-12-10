@@ -1,6 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+void init_file(File *f){ f->tete=f->queue=NULL; }
+int file_vide(File *f){ return f->tete==NULL; }
+void enfiler(File *f, Commande c){
+    Noeud n=(Noeud)malloc(sizeof(Noeud)); n->cmd=c; n->suivant=NULL;
+    if(file_vide(f)) f->tete=f->queue=n;
+    else { f->queue->suivant=n; f->queue=n; }
+}
+Commande defiler(File *f){
+    Noeud *n=f->tete; Commande c=n->cmd;
+    f->tete=n->suivant; if(f->tete==NULL) f->queue=NULL;
+    free(n); return c;
+}
+
 void executer_commande(Commande c){
     if(strcmp(c.priorite,URGENTE)==0){
         printf("COMMANDE URGENTE : %s\n",c.type);
