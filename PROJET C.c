@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+void ajouter_commande_normale(Commande c){ enfiler(&file_normale,c); }
+void ajouter_commande_urgente(Commande c){ enfiler(&file_urgente,c); }
+int prendre_prochaine_commande(Commande *out){
+    if(!file_vide(&file_urgente)){ *out=defiler(&file_urgente); return 1; }
+    if(!file_vide(&file_normale)){ *out=defiler(&file_normale); return 1; }
+    return 0;
+}
 void executer_commande(Commande c){
     if(strcmp(c.priorite,URGENTE)==0){
         printf("COMMANDE URGENTE : %s\n",c.type);
