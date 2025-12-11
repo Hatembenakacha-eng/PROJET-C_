@@ -130,16 +130,6 @@ int prendre_prochaine_commande(Commande *out){
     if(!file_vide(&file_normale)){ *out=defiler(&file_normale); return 1; }
     return 0;
 }
-void executer_commande(Commande c){
-    if(strcmp(c.priorite,URGENTE)==0){
-        printf("COMMANDE URGENTE : %s\n",c.type);
-        temps_simulation+=DUREE_CYCLE_BASE;
-        journaliser(&c,"EXECUTION URGENTE");
-        afficher_interface();
-        return;
-    }}
-
-
 int main(){
     init_file(&file_normale); init_file(&file_urgente);
     FILE *f=fopen("journal_robot.txt","w"); if(f){fprintf(f,"======= Journal Robot =======\n"); fclose(f);}
